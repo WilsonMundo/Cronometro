@@ -1,0 +1,40 @@
+name: Deploy Blazor to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛠️ Clonar el repositorio
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: 🏗️ Configurar .NET y construir la app
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'  
+
+      - run: dotnet publish -c Release --output dist
+
+      - name: 📂 Mover archivos a docs/
+        run: |
+          rm -rf docs
+          mkdir -p docs
+          cp -r dist/* docs/
+          touch docs/.nojekyll
+
+      - name: 🚀 Desplegar en GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # La rama donde está tu GitHub Pages
+          folder: docs  
+          clean: true
