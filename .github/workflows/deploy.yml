@@ -26,11 +26,12 @@ jobs:
       - run: dotnet publish -c Release --output dist
 
       - name: 📂 Mover archivos a docs/
-          run: |          
-            rm -rf docs
-            mkdir -p docs
-            cp -r dist/wwwroot/* docs/
-            touch docs/.nojekyll
+        run: |
+          rm -rf docs
+          mkdir -p docs
+          cp -r dist/wwwroot/* docs/
+          touch docs/.nojekyll
+
 
       - name: 🚀 Desplegar en GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
