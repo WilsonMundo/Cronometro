@@ -1,0 +1,53 @@
+﻿@inject IIndexDBService IndexDB;
+@inject NotificationService NotificationService
+<RadzenCard Style="max-width: 600px; margin: auto; padding: 20px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+    <h3 class="text-center">Inscripción de Competidores</h3>
+
+    <RadzenTemplateForm TItem="CompetidorBD"
+                        Data="competidor" 
+                        Submit="GuardarCompetidor">
+        <RadzenFormField Text="Nombre">
+            <Start>
+                <RadzenIcon Icon="account_circle" />
+            </Start>
+            <ChildContent>
+                <RadzenTextBox @bind-Value="competidor.Nombre" 
+                                Class="form-control" 
+                                Placeholder="Ingrese nombre" />
+            </ChildContent>
+        </RadzenFormField>
+
+        <RadzenFormField Text="Número de Competidor">
+            <Start>
+                <RadzenIcon Icon="confirmation_number" />
+            </Start>
+            <ChildContent>
+                <RadzenNumeric @bind-Value="competidor.NumeroCompetidor" 
+                               class="form-control"
+                               Placeholder="Ingrese número" />
+            </ChildContent>
+        </RadzenFormField>
+
+        <RadzenButton ButtonType="ButtonType.Submit" 
+                      Text="Guardar" 
+                      Style="width: 100%; margin-top: 10px;" 
+                      class="btn btn-primary"
+                      Disabled="@guardando"/>
+    </RadzenTemplateForm>
+</RadzenCard>
+
+<RadzenCard Style="max-width: 800px; margin: auto; margin-top: 20px; padding: 20px;">
+    <h3 class="text-center">Lista de Competidores</h3>
+    <RadzenDataGrid TItem="Competidor" Data="competidors" PageSize="10" ShowPagingSummary="true" AllowFiltering="true">
+        <Columns>
+            <RadzenDataGridColumn TItem="Competidor" Property="IdCompetidor" Title="ID" />
+            <RadzenDataGridColumn TItem="Competidor" Property="Nombre" Title="Nombre" />
+            <RadzenDataGridColumn TItem="Competidor" Property="NumeroCompetidor" Title="Número de Competidor" />
+        </Columns>
+    </RadzenDataGrid>
+</RadzenCard>
+
+
+@code {
+    
+}

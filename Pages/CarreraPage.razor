@@ -1,0 +1,55 @@
+﻿@page "/Carrera"
+
+<RadzenCard Style="max-width: 800px; margin: auto; margin-top: 20px; padding: 20px;">
+    <h3 class="text-center">🏎️ Carrera en Progreso</h3>
+    <RadzenButton Text="▶ Iniciar Carrera" Class="btn btn-danger" Style="margin-bottom: 10px;" Click="IniciarCarrera" />
+    <RadzenDataGrid TItem="Competidor" Data="competidores" PageSize="5" ShowPagingSummary="true" AllowFiltering="true">
+        <Columns>
+            <RadzenDataGridColumn TItem="Competidor" Property="IdCompetidor" Title="ID" />
+            <RadzenDataGridColumn TItem="Competidor" Property="Nombre" Title="Nombre" />
+            <RadzenDataGridColumn TItem="Competidor" Property="NumeroCompetidor" Title="Número de Competidor" />
+            <RadzenDataGridColumn TItem="Competidor" Property="TiempoFinal" Title="Tiempo Final (s)" />
+            <RadzenDataGridColumn TItem="Competidor" Property="Posicion" Title="Posición" />
+        </Columns>
+    </RadzenDataGrid>
+</RadzenCard>
+@code {
+    
+    private List<Competidor> competidores;
+    private bool carreraEnProgreso = false;
+
+    protected override void OnInitialized()
+    {
+        competidores = new List<Competidor>
+        {
+            new Competidor { IdCompetidor = 1, Nombre = "Juan Pérez", NumeroCompetidor = 101, TiempoFinal = 0, Posicion = 1 },
+            new Competidor { IdCompetidor = 2, Nombre = "Ana Gómez", NumeroCompetidor = 202, TiempoFinal = 0, Posicion = 2 },
+            new Competidor { IdCompetidor = 3, Nombre = "Carlos López", NumeroCompetidor = 303, TiempoFinal = 0, Posicion = 3 }
+        };
+    }
+
+    private async Task IniciarCarrera()
+    {
+        carreraEnProgreso = true;
+        for (int i = 0; i < 10; i++)
+        {
+            await Task.Delay(2000);
+            foreach (var competidor in competidores)
+            {
+                competidor.TiempoFinal += new Random().Next(1, 4);
+            }
+            competidores = competidores.OrderBy(c => c.TiempoFinal).Select((c, index) => { c.Posicion = index + 1; return c; }).ToList();
+            StateHasChanged();
+        }
+        carreraEnProgreso = false;
+    }
+
+    private class Competidor
+    {
+        public int IdCompetidor { get; set; }
+        public string Nombre { get; set; }
+        public int NumeroCompetidor { get; set; }
+        public float TiempoFinal { get; set; }
+        public int Posicion { get; set; }
+    }
+}
