@@ -1,0 +1,25 @@
+﻿@page "/ConsultaTiempos"
+
+
+<RadzenCard Style="max-width: 800px; margin: auto; margin-top: 20px; padding: 20px;">
+    <h3 class="text-center">⏱️ Tiempos de Competidores</h3>
+    <RadzenDataGrid TItem="Competidor" Data="competidores" PageSize="5" ShowPagingSummary="true" AllowFiltering="true">
+        <Columns>
+            <RadzenDataGridColumn TItem="Competidor" Property="IdCompetidor" Title="ID" />
+            <RadzenDataGridColumn TItem="Competidor" Property="Nombre" Title="Nombre" />
+            <RadzenDataGridColumn TItem="Competidor" Property="NumeroCompetidor" Title="Número de Competidor" />
+            <RadzenDataGridColumn TItem="Competidor" Property="TiempoFinal" Title="Tiempo Final (s)" />
+        </Columns>
+    </RadzenDataGrid>
+</RadzenCard>
+
+@code {
+    
+
+    private List<Competidor> competidores = new List<Competidor>
+    {
+        new Competidor { IdCompetidor = 1, Nombre = "Juan Pérez", NumeroCompetidor = 101, TiempoFinal = 65.3f },
+        new Competidor { IdCompetidor = 2, Nombre = "Ana Gómez", NumeroCompetidor = 202, TiempoFinal = 72.1f },
+        new Competidor { IdCompetidor = 3, Nombre = "Carlos López", NumeroCompetidor = 303, TiempoFinal = 68.7f }
+    };
+}
