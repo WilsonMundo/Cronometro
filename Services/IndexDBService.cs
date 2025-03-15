@@ -13,7 +13,7 @@ namespace Cronometro.Services
         public IndexDBService(IJSRuntime jsRuntime)
         {
             moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", "/BD.js").AsTask());            
+                "import", "/Cronometro/BD.js").AsTask());            
         }
         public async ValueTask DisposeAsync()
         {
